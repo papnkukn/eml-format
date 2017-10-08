@@ -1,7 +1,7 @@
 {
   "name": "eml-format",
-  "version": "0.3.0",
-  "description": "EML file format parser",
+  "version": "0.5.0",
+  "description": "RFC 822 EML file format parser and builder",
   "author": "Papn Kukn",
   "license": "MIT",
   "main": "index.js",

@@ -1,6 +1,11 @@
-## EML file format parser
+## EML file format
 
-This project is related to an e-mail message format from the POP3 protocol. An EML file consists of headers and body similar to HTTP.
+A pure Node.js library for parsing and building EML files, i.e. e-mail message format described in [RFC 822](http://www.ietf.org/rfc/rfc0822.txt). EML is returned by the POP3 protocol and handled by many e-mail agents like Mozilla Thunderbird or Micfosot Outlook. An EML file consists of headers and body similar to the HTTP structure.
+
+```
+File extension: .eml
+Mime type: message/rfc822
+```
 
 ### How does EML look like?
 
@@ -9,7 +14,7 @@ Date: Wed, 29 Jan 2014 11:10:06 +0100
 To: "Foo Bar" <foo.bar@example.com>
 From: Online Shop <no-reply@example.com>
 Subject: Winter promotions
-Content-Type: text/plain
+Content-Type: text/plain; charset=utf-8
 
 Lorem ipsum...
 ```
@@ -105,6 +110,15 @@ Parses EML file content and returns object-oriented representation of the conten
 | options | object | Optional parameter, `{ headersOnly: true }` (`false` by default) |
 | callback | function(error, data) | Callback function to be invoked when parse is complete |
 
+### build(eml, callback)
+
+Builds an EML message.
+
+| Argument | Type | Description |
+|----------|------|-------------|
+| data | object | E-mail data, see example |
+| callback | function(error, eml) | Callback function to be invoked when build is complete |
+
 ### unpack(eml, directory, callback)
 
 Unpacks EML message and attachments to a directory.
@@ -173,7 +187,45 @@ emlformat.unpack(eml, dir, function(error, data) {
 });
 ```
 
-### Register a new mime type extension
+### Create an EML file
+
+```javascript
+var fs = require('fs');
+var emlformat = require('eml-format');
+
+var data = {
+  from: "no-reply@bar.com",
+  to: {
+    name: "Foo Bar",
+    email: "foo@bar.com"
+  },
+  subject: "Winter promotions",
+  text: "Lorem ipsum...",
+  html: '<html><head></head><body>Lorem ipsum...<br /><img src="nodejs.png" alt="" /></body></html>',
+  attachments: [
+    {
+      name: "sample.txt",
+      contentType: "text/plain; charset=utf-8",
+      data: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi eget elit turpis. Aliquam lorem nunc, dignissim in risus at, tempus aliquet justo..."
+    },
+    {
+      name: "nodejs.png",
+      contentType: "image/png",
+      data: fs.readFileSync("nodejs.png"),
+      inline: true
+    }
+  ]
+};
+
+var eml = fs.readFileSync("sample.eml", "utf-8");
+emlformat.build(data, function(error, eml) {
+  if (error) return console.log(error);
+  fs.writeFileSync("build.eml", eml);
+  console.log("Done!");
+});
+```
+
+### Register a new mime type file extension
 
 ```javascript
 var emlformat = require('eml-format');
