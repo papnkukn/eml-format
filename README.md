@@ -74,10 +74,13 @@ Options:
   --help       Print this message
   --verbose    Enable detailed logging
   --version    Print version number
+  --json       Create parsed.json and manifest.json
+  --no-unpack  Used with --json to skip unpacking
 
 Examples:
   eml-unpack message.eml .
-  eml-unpack --verbose ./sample.eml ./folder
+  eml-unpack --verbose sample.eml folder
+  eml-unpack --json --no-unpack ./sample.eml ./folder
 ```
 
 ## Reference
@@ -179,6 +182,7 @@ emlformat.fileExtensions["application/octet-stream"] = ".bin";
 ```
 ### Extract e-mail address and name
 
+Plain text name
 ```javascript
 var emlformat = require('eml-format');
 var data = emlformat.getEmailAddress('"Foo Bar" <foo@bar.com>');
