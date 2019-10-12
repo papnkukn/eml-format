@@ -40,7 +40,7 @@ emlformat.read(eml, function(error, data) {
 ```
 
 Output structure
-```json
+```javascript
 {
   "subject": "Winter promotions",
   "from": "Online Shop <no-reply@example.com>",
@@ -231,13 +231,13 @@ emlformat.build(data, function(error, eml) {
 var data = {
   from: "no-reply@bar.com",
   to: [ 
-		{ name: "Foo", email: "foo@example.com" },
-		{ name: "Bar", email: "bar@example.com" }
-	],
-	cc: [
-		{ name: "Foo Bar", email: "foo@bar.com" },
-		{ email: "info@bar.com" }
-	],
+    { name: "Foo", email: "foo@example.com" },
+    { name: "Bar", email: "bar@example.com" }
+  ],
+  cc: [
+    { name: "Foo Bar", email: "foo@bar.com" },
+    { email: "info@bar.com" }
+  ],
   subject: "Winter promotions",
   ...
 };
@@ -267,6 +267,27 @@ var emlformat = require('eml-format');
 var data = emlformat.getEmailAddress('=?UTF-8?Q?You=E2=80=99re=20Foo=20Bar?= <foo@bar.com>');
 //data.name == "You’re Foo Bar";
 //data.email == "foo@bar.com";
+```
+
+Multiple e-mail addresses
+```javascript
+var emlformat = require('eml-format');
+var data = emlformat.getEmailAddress('"Foo Bar" <foo@bar.com>, Example <info@example.com>');
+//data = [
+//  { name: "Foo Bar", email: "foo@bar.com" },
+//  { name: "Example", email: "info@example.com" }
+//]
+```
+
+## Build e-mail address
+
+```javascript
+var emlformat = require('eml-format');
+var string = emlformat.toEmailAddress({
+  name: "Foo Bar",
+  email: "foo@bar.com"
+});
+//string = "Foo Bar" <foo@bar.com>
 ```
 
 ### Decode "quoted-printable"
