@@ -48,6 +48,25 @@ exports["Email address"] = function(test) {
   test.ok(data.email == "foo@bar.com", 'Expected "foo@bar.com" but got ' + data.email);
   test.ok(data.name == "You’re Foo Bar", 'Expected "You’re Foo Bar" but got ' + data.name);
   
+  email = 'foo@example.com, "Bar" <bar@example.com>, =?UTF-8?Q?You=E2=80=99re=20Foo=20Bar?= <foo@bar.com>';
+  data = emlformat.getEmailAddress(email);
+  test.ok(typeof data == "object");
+  test.ok(Array.isArray(data));
+  test.ok(data.length == 3);
+  test.ok(typeof data[0].name == "undefined");
+  test.ok(typeof data[0].email == "string");
+  test.ok(typeof data[1].name == "string");
+  test.ok(typeof data[1].email == "string")
+  test.ok(data[1].name == "Bar", 'Expected "Bar" but got ' + data[1].name);
+  test.ok(typeof data[2].name == "string");
+  test.ok(typeof data[2].email == "string")
+  test.ok(data[2].name == "You’re Foo Bar", 'Expected "You’re Foo Bar" but got ' + data[2].name);
+  
+  //Build e-mail address string from array
+  //expected = '<foo@example.com>, "Bar" <bar@example.com>, "You\'re Foo Bar" <foo@bar.com>';
+  //actual = emlformat.toEmailAddress(data);
+  //test.ok(actual == expected, 'Expected "' + expected + '" but got "' + actual + '"');
+  
   test.done(); 
 };
 

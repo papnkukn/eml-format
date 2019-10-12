@@ -225,6 +225,24 @@ emlformat.build(data, function(error, eml) {
 });
 ```
 
+### Multiple e-mail addresses
+
+```javascript
+var data = {
+  from: "no-reply@bar.com",
+  to: [ 
+		{ name: "Foo", email: "foo@example.com" },
+		{ name: "Bar", email: "bar@example.com" }
+	],
+	cc: [
+		{ name: "Foo Bar", email: "foo@bar.com" },
+		{ email: "info@bar.com" }
+	],
+  subject: "Winter promotions",
+  ...
+};
+```
+
 ### Register a new mime type file extension
 
 ```javascript
@@ -232,6 +250,7 @@ var emlformat = require('eml-format');
 emlformat.fileExtensions["application/zip"] = ".zip";
 emlformat.fileExtensions["application/octet-stream"] = ".bin";
 ```
+
 ### Extract e-mail address and name
 
 Plain text name

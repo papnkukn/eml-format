@@ -101,3 +101,48 @@ exports["Read multi-part boundaries"] = function(test) {
     test.done();
   });  
 };
+
+exports["Read multiple To and Cc"] = function(test) {
+  var expected, actual;
+  var src = path.join(__dirname, "./fixtures/cc.eml");
+  var eml = fs.readFileSync(src, "utf-8");
+  
+  emlformat.verbose = false;
+  emlformat.read(eml, function(error, result) {
+    if (error) {
+      test.ok(false, error.message);
+    }
+    else {
+      test.ok(typeof result == "object");
+      test.ok(typeof result.headers == "object");
+      test.ok(typeof result.from == "object");
+      test.ok(typeof result.to == "object");
+      test.ok(typeof result.cc == "object");
+      test.ok(Array.isArray(result.to), "Expected array from 'To' header");
+      test.ok(result.to.length == 2, "Expected two e-mail in 'To' header");
+      test.ok(Array.isArray(result.cc), "Expected array from 'Cc' header");
+      test.ok(result.cc.length == 2, "Expected two e-mail in 'Cc' header");
+      
+      expected = "Foo_Bar";
+      actual = result.from.name;
+      test.ok(actual == expected, 'Expected "' + expected + '" but got "' + actual + '"');
+      
+      expected = "Foo Bar";
+      actual = result.to[0].name;
+      test.ok(actual == expected, 'Expected "' + expected + '" but got "' + actual + '"');
+      
+      expected = "foo.bar@example.com";
+      actual = result.to[0].email;
+      test.ok(actual == expected, 'Expected "' + expected + '" but got "' + actual + '"');
+      
+      expected = "Bar";
+      actual = result.cc[1].name;
+      test.ok(actual == expected, 'Expected "' + expected + '" but got "' + actual + '"');
+      
+      expected = "bar@example.com";
+      actual = result.cc[1].email;
+      test.ok(actual == expected, 'Expected "' + expected + '" but got "' + actual + '"');
+    }
+    test.done();
+  });  
+};
