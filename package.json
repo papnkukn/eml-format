@@ -1,6 +1,6 @@
 {
   "name": "eml-format",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "description": "RFC 822 EML file format parser and builder",
   "author": "Papn Kukn",
   "license": "MIT",
@@ -20,5 +20,8 @@
   },
   "devDependencies": {
     "nodeunit": "^0.11.3"
+  },
+  "dependencies": {
+    "iconv-lite": "^0.5.0"
   }
 }

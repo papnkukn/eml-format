@@ -1,6 +1,6 @@
 ## EML file format
 
-A pure Node.js library for parsing and building EML files, i.e. e-mail message format described in [RFC 822](http://www.ietf.org/rfc/rfc0822.txt). EML is returned by the POP3 protocol and handled by many e-mail agents like Mozilla Thunderbird or Micfosot Outlook. An EML file consists of headers and body similar to the HTTP structure.
+A pure Node.js library for parsing and building EML files, i.e. e-mail message format described in [RFC 822](http://www.ietf.org/rfc/rfc0822.txt) ([another link](https://www.w3.org/Protocols/rfc822/)). EML is returned by the POP3 protocol and handled by many e-mail agents like Mozilla Thunderbird or Micfosot Outlook. An EML file consists of headers and body similar to the HTTP structure.
 
 ```
 File extension: .eml
@@ -262,4 +262,11 @@ var message = emlformat.unquotePrintable("Join line 1=\r\n=20with line 2=0D=0A")
 ```javascript
 var emlformat = require('eml-format');
 var message = emlformat.unquoteUTF8("=?UTF-8?B?V2hhdOKAmXMgeW91ciBvbmxpbmUgc2hvcHBpbmcgc3R5bGU/?=");
+```
+
+### Decode other character set
+
+```javascript
+var emlformat = require('eml-format');
+var message = emlformat.unquoteString("=?ISO-8859-2?Q?Po=B9ta?=");
 ```

@@ -1,8 +1,10 @@
-# Logs
+# Additional
 .docs
 logs
 *.log
+test/unpack
 npm-debug.log*
+package-lock.json
 
 # Runtime data
 pids

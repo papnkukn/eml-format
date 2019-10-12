@@ -51,14 +51,41 @@ exports["Email address"] = function(test) {
   test.done(); 
 };
 
+exports["Unquote string"] = function(test) {
+  var fixture, expected, actual;
+  
+  //Q = Quoted
+  fixture = "=?UTF-8?Q?You=E2=80=99ve_added_a_card?=";
+  expected = "You’ve_added_a_card";
+  actual = emlformat.unquoteString(fixture);
+  test.ok(actual == expected, 'Expected "' + expected + '" but got "' + actual + '"');
+  
+  //B = Base64
+  fixture = "=?UTF-8?B?V2hhdOKAmXMgeW91ciBvbmxpbmUgc2hvcHBpbmcgc3R5bGU/?=";
+  expected = "What’s your online shopping style?";
+  actual = emlformat.unquoteString(fixture);
+  test.ok(actual == expected, 'Expected "' + expected + '" but got "' + actual + '"');
+  
+  //ISO 8859-2 character set
+  fixture = "=?ISO-8859-2?Q?Po=B9ta?=";
+  expected = "Pošta";
+  actual = emlformat.unquoteString(fixture);
+  test.ok(actual == expected, 'Expected "' + expected + '" but got "' + actual + '"');
+  
+  test.done(); 
+};
+
+
 exports["Unquote UTF8"] = function(test) {
   var fixture, expected, actual;
   
+  //Q = Quoted
   fixture = "=?UTF-8?Q?You=E2=80=99ve_added_a_card?=";
   expected = "You’ve_added_a_card";
   actual = emlformat.unquoteUTF8(fixture);
   test.ok(actual == expected, 'Expected "' + expected + '" but got "' + actual + '"');
   
+  //B = Base64
   fixture = "=?UTF-8?B?V2hhdOKAmXMgeW91ciBvbmxpbmUgc2hvcHBpbmcgc3R5bGU/?=";
   expected = "What’s your online shopping style?";
   actual = emlformat.unquoteUTF8(fixture);
