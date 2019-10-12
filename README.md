@@ -1,13 +1,13 @@
 ## EML file format
 
-A pure Node.js library for parsing and building EML files, i.e. e-mail message format described in [RFC 822](http://www.ietf.org/rfc/rfc0822.txt) ([another link](https://www.w3.org/Protocols/rfc822/)). EML is returned by the POP3 protocol and handled by many e-mail agents like Mozilla Thunderbird or Micfosot Outlook. An EML file consists of headers and body similar to the HTTP structure.
+A pure Node.js library for parsing and building EML files, i.e. the e-mail message format described in [RFC 822](http://www.ietf.org/rfc/rfc0822.txt) ([another link](https://www.w3.org/Protocols/rfc822/)). EML is returned by the POP3 protocol and handled by many e-mail agents like Mozilla Thunderbird or Microsoft Outlook. An EML file consists of headers and body similar to the HTTP structure.
 
 ```
 File extension: .eml
 Mime type: message/rfc822
 ```
 
-### How does EML look like?
+### What does EML look like?
 
 ```
 Date: Wed, 29 Jan 2014 11:10:06 +0100
@@ -70,7 +70,7 @@ Output structure
 
 ### Command Line
 
-A command line tool to extract .eml file into a folder. Output directory will be populated with .txt and .html message and attachment files.
+A command line tool to extract an .eml file into a folder. The output directory will be populated with .txt and .html message and attachment files.
 ```
 Usage:
   eml-unpack [options] [message.eml] [directory]
@@ -92,7 +92,7 @@ Examples:
 
 ### read(eml, [options], callback)
 
-Parses EML file content and return user-friendly object.
+Parses EML file content and returns user-friendly object
 
 | Argument | Type | Description |
 |----------|------|-------------|
@@ -102,8 +102,8 @@ Parses EML file content and return user-friendly object.
 
 ### parse(eml, [options], callback)
 
-Parses EML file content and returns object-oriented representation of the content.
- 
+Parses EML file content and returns object-oriented representation of the content
+
 | Argument | Type | Description |
 |----------|------|-------------|
 | eml | string | EML file content |
@@ -112,7 +112,7 @@ Parses EML file content and returns object-oriented representation of the conten
 
 ### build(eml, callback)
 
-Builds an EML message.
+Builds an EML message
 
 | Argument | Type | Description |
 |----------|------|-------------|
@@ -121,7 +121,7 @@ Builds an EML message.
 
 ### unpack(eml, directory, callback)
 
-Unpacks EML message and attachments to a directory.
+Unpacks EML message and attachments to a directory
 
 | Argument | Type | Description |
 |----------|------|-------------|
@@ -147,7 +147,7 @@ emlformat.read(eml, { headersOnly: true }, function(error, data) {
 
 ### Read the complete EML file
 
-The `parse` function parses raw EML content into JavaScript object for further processing.
+The `parse` function parses raw EML content into a JavaScript object for further processing.
 ```javascript
 var fs = require('fs');
 var emlformat = require('eml-format');
@@ -161,7 +161,7 @@ emlformat.parse(eml, function(error, data) {
 });
 ```
 
-Or use the `read` instead of parse `parse`. The `read` function decodes the **base64**, **quote-printable**, **=?UTF-8?...?=** encoded content and extracts plain text, html content and attachments. So this method is a little slower but more user friendly.
+Or use `read` instead of `parse`. The `read` function decodes the **base64**, **quote-printable**, **=?UTF-8?...?=** encoded content and extracts plain text, html content and attachments. So this method is a little slower but more user friendly.
 ```javascript
 emlformat.read(eml, function(error, data) {
   if (error) return console.log(error);
