@@ -217,7 +217,6 @@ var data = {
   ]
 };
 
-var eml = fs.readFileSync("sample.eml", "utf-8");
 emlformat.build(data, function(error, eml) {
   if (error) return console.log(error);
   fs.writeFileSync("build.eml", eml);
