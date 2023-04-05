@@ -146,3 +146,37 @@ exports["Read multiple To and Cc"] = function(test) {
     test.done();
   });  
 };
+
+
+exports["Read Unicode characters"] = function(test) {
+  var expected, actual, char;
+  var src = path.join(__dirname, "./fixtures/unicode.eml");
+  var eml = fs.readFileSync(src, "utf-8");
+  
+  emlformat.verbose = false;
+  emlformat.read(eml, function(error, result) {
+    if (error) {
+      test.ok(false, error.message);
+    }
+    else {
+      test.ok(typeof result.html == "string");
+
+      expected = "⭐";
+      actual = result.html[result.html.indexOf("4-bytes Unicode") - 2];
+      test.ok(actual.indexOf(expected) == 0, 'Expected "' + expected + '" but got "' + actual + '"');
+
+      char = "ɑ";
+      expected = result.html.indexOf(char);
+      test.ok(expected != -1, 'Expected "' + char + '" not found');
+
+      char = "ɑ⍺"
+      expected = result.html.indexOf(char);
+      test.ok(expected != -1, 'Expected "' + char + '" not found');
+
+      char = "⭐⭐⭐⭐⭐⭐"
+      expected = result.html.indexOf(char);
+      test.ok(expected != -1, 'Expected "' + char + '" not found');
+    }
+    test.done();
+  });  
+};
